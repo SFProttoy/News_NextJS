@@ -1,26 +1,23 @@
-import React from "react";
 import { useRouter } from "next/router";
+import React from "react";
 import useGlobalState from "../../hooks/useGlobalState";
 
-// import axios from 'axios';
-
-const Category = () => {
+const Search = () => {
   const router = useRouter();
-  const { data } = useGlobalState();
   const { id } = router.query;
-  const categoryData = [];
 
+  const { data } = useGlobalState();
+  const searchData = [];
   for (const d of data) {
-    // console.log(d.category[0]);
-    if (d.category[0] === id) {
-      categoryData.push(d);
+    // console.log()
+    if (d.title.includes(id.replace(/-/g, " "))) {
+      searchData.push(d);
     }
   }
-  // console.log(categoryData);
 
   return (
     <div className="row">
-      {categoryData.map((data, index) => {
+      {searchData.map((data, index) => {
         return (
           <div class="col-sm-4" key={index}>
             <div className="card" style={{ width: "18rem" }}>
@@ -40,4 +37,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Search;
