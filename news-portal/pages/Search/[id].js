@@ -8,9 +8,10 @@ const Search = () => {
 
   const { data } = useGlobalState();
   const searchData = [];
+
   for (const d of data) {
-    // console.log()
-    if (d.title.includes(id.replace(/-/g, " "))) {
+    if (d.title.includes(id)) {
+      console.log("hello", d);
       searchData.push(d);
     }
   }
@@ -19,7 +20,7 @@ const Search = () => {
     <div className="row">
       {searchData.map((data, index) => {
         return (
-          <div class="col-sm-4" key={index}>
+          <div className="col-sm-4" key={index}>
             <div className="card" style={{ width: "18rem" }}>
               {/* <img src="..." className="card-img-top" alt="..." /> */}
               <div className="card-body">

@@ -2,11 +2,22 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import useGlobalState from "../hooks/useGlobalState";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { getNewsAsync } from "../features/news/newsSlice";
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
   const { data } = useGlobalState();
   const router = useRouter();
+
+  const { news } = useSelector((state) => state.news);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getNewsAsync());
+  }, []);
+
   const handleSearch = (e) => {
     e.preventDefault();
     console.log(search);
@@ -41,8 +52,8 @@ const Navbar = () => {
           <a className="navbar-brand" href="#"></a>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              {data &&
-                data?.map((item, index) => {
+              {news &&
+                news?.map((item, index) => {
                   if (categories.indexOf(item.category[0]) === -1) {
                     categories.push(item.category[0]);
                   }

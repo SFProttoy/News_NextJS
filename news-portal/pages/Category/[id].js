@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import useGlobalState from "../../hooks/useGlobalState";
+import { getNewsAsync } from "../../features/news/newsSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 // import axios from 'axios';
 
@@ -10,10 +12,20 @@ const Category = () => {
   const { id } = router.query;
   const categoryData = [];
 
-  for (const d of data) {
-    // console.log(d.category[0]);
-    if (d.category[0] === id) {
-      categoryData.push(d);
+  const { news } = useSelector((state) => state.news);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getNewsAsync());
+  }, []);
+
+  if (news) {
+    for (const d of news) {
+      // console.log(d.category[0]);
+      if (d.category[0] === id) {
+        categoryData.push(d);
+      }
     }
   }
   // console.log(categoryData);
